@@ -7,15 +7,18 @@ import GuessResults from './GuessResults';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import Banner from './Banner';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
+const getRandAnswer = () => sample(WORDS)
+
+const defaultGuessResults = []
+const defaultCorrectlyGuessed = false
 
 function Game() {
-  const [guessResults, setGuessResults] = useState([])
-  const [correctlyGuessed, setCorrectlyGuessed] = useState(false)
+  const [guessResults, setGuessResults] = useState(defaultGuessResults)
+  const [answer, setAnswer] = useState(getRandAnswer())
+  const [correctlyGuessed, setCorrectlyGuessed] = useState(defaultCorrectlyGuessed)
   const gameOver = (guessResults.length === NUM_OF_GUESSES_ALLOWED) || correctlyGuessed
+
+  console.log(answer)
 
   const addGuess = (guess) => {
     setGuessResults(prev => [
@@ -26,6 +29,12 @@ function Game() {
     if (guess === answer) {
       setCorrectlyGuessed(true)
     }
+  }
+
+  const restart = () => {
+    setGuessResults(defaultGuessResults)
+    setAnswer(getRandAnswer())
+    setCorrectlyGuessed(defaultCorrectlyGuessed)
   }
 
   return (
@@ -55,6 +64,13 @@ function Game() {
                     </p>
                   )
               }
+              <button
+                onClick={restart}
+                style={{
+                  marginTop: '12px'
+                }}>
+                Restart
+              </button>
             </Banner>
           )
       }

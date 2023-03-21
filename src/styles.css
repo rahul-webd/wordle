@@ -230,3 +230,9 @@ h1 {
     transform: translateY(0%);
   }
 }
+
+.banner > button {
+  border: 1px solid white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
